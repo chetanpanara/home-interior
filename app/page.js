@@ -1,7 +1,8 @@
 import HeroSection from "@/components/HeroSection";
-import PortfolioGrid from "@/components/PortfolioGrid";
 import Whychooseus from "@/components/Whychooseus";
 import About from "./about/page";
+import ContactSection from "./contact/page";
+import Services from "./services/page";
 
 
 export default function Home() {
@@ -10,7 +11,8 @@ export default function Home() {
       <HeroSection />
       <About/>
       <Whychooseus />
-      <PortfolioGrid/>
+      <Services/>
+      <ContactSection/>
     </>
   );
 }

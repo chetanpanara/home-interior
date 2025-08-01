@@ -1,7 +1,6 @@
 "use client";
-import Whychooseus from "@/components/Whychooseus";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+
 
 export default function About() {
   return (

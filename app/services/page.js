@@ -22,9 +22,9 @@ const cards = [
   },
 ];
 
-export default function PortfolioGrid() {
+export default function Services() {
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 bg-white">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 mt-20 bg-white">
       <div className="text-center max-w-4xl mx-auto mb-12">
         <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
           Our Interior Design Services
