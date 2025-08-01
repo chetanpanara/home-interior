@@ -13,11 +13,11 @@ export default function Footer() {
         </div>
 
         {/* Social Media Icons */}
-        <div className="flex items-center space-x-6">
+        {/* <div className="flex items-center space-x-6">
           <div className="text-gray-700 text-md text-center md:text-left">
             Developed by chetanpanara
           </div>
-        </div>
+        </div> */}
       </div>
     </footer>
   );

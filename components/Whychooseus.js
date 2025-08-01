@@ -10,7 +10,7 @@ export default function Whychooseus() {
   }, []);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 w-full bg-white md:py-24 md:px-12 flex flex-col md:flex-row items-center justify-between">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8  w-full bg-white md:py-24 md:px-12 flex flex-col md:flex-row items-center justify-between">
       <motion.div
         className="w-full md:w-1/2 space-y-6"
         initial={{ opacity: 0, x: -50 }}

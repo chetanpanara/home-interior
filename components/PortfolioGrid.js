@@ -1,32 +1,31 @@
 "use client";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 
 const cards = [
   {
     title: "Commercial Space Design",
     description:
       "This living room was designed to embody simplicity, elegance, and functionality. The goal was to create a warm yet sophisticated space with a neutral color palette, natural textures.",
-    image: "/img/p5.jpeg",
+    image: "/img/p1.jpeg",
   },
   {
     title: "Commercial Space Design",
     description:
       "This living room was designed to embody simplicity, elegance, and functionality. The goal was to create a warm yet sophisticated space with a neutral color palette, natural textures.",
-    image: "/img/p6.jpeg",
+    image: "/img/p2.jpg",
   },
   {
     title: "Commercial Space Design",
     description:
       "This living room was designed to embody simplicity, elegance, and functionality. The goal was to create a warm yet sophisticated space with a neutral color palette, natural textures.",
-    image: "/img/p7.jpeg",
+    image: "/img/p3.jpg",
   },
 ];
 
 export default function PortfolioGrid() {
   return (
-    <section className="w-full px-4 md:px-12 py-20 bg-white">
-      <div className="text-center max-w-3xl mx-auto mb-12">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 bg-white">
+      <div className="text-center max-w-4xl mx-auto mb-12">
         <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
           Showcasing Timeless Designs That <br />
           Inspire and Elevate Spaces.
@@ -38,7 +37,7 @@ export default function PortfolioGrid() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {cards.map((card, i) => (
           <motion.div
             key={i}
@@ -60,9 +59,7 @@ export default function PortfolioGrid() {
                 <h3 className="text-lg font-semibold text-gray-900">
                   {card.title}
                 </h3>
-                <button className="bg-black text-white p-2 rounded-full hover:bg-gray-800 transition">
-                  <ArrowUpRight size={16} />
-                </button>
+                
               </div>
               {card.description && (
                 <p className="text-sm text-gray-600 leading-snug">

@@ -11,8 +11,8 @@ export default function Navbar() {
 
   const menuItems = [
     { name: "Home", href: "/" },
-    { name: "How it works", href: "/about" },
-    { name: "Projects", href: "/projects" },
+    { name: "About", href: "/about" },
+    { name: "Services", href: "/services" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -23,18 +23,27 @@ export default function Navbar() {
 
   const [isTransparent, setIsTransparent] = useState(true);
   
-    useEffect(() => {
-      const handleScroll = () => {
-        if (window.scrollY > window.innerHeight - 80) {
-          setIsTransparent(false);
-        } else {
-          setIsTransparent(true);
-        }
-      };
-  
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+  useEffect(() => {
+    if (pathname !== "/") {
+      // Always show white navbar on other pages
+      setIsTransparent(false);
+      return;
+    }
+
+    // Transparent only on hero section of home page
+    const handleScroll = () => {
+      if (window.scrollY > window.innerHeight - 80) {
+        setIsTransparent(false);
+      } else {
+        setIsTransparent(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // set initial state on mount
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [pathname]);
 
   return (
     <nav
