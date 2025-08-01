@@ -60,7 +60,7 @@ export default function Navbar() {
               href="/"
               className="text-2xl font-bold from-orange-100 via-orange-400 to-orange-500 bg-clip-text text-transparent bg-gradient-to-r "
             >
-              Havenly
+              HavenlyHome
             </Link>
           </div>
 

@@ -20,8 +20,8 @@ export default function Whychooseus() {
         <p className="text-sm text-[#CBAE80] uppercase tracking-widest">
           Why Choose Us
         </p>
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
-          Providing Quality Your Interior Services
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
+          Providing <span className="text-orange-300">Quality Your Interior</span> Services
         </h1>
         <p className="text-gray-600">
           With over four decades of experience providing solutions to

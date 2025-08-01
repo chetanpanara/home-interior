@@ -41,11 +41,11 @@ const HeroSection = () => {
   return (
     <div className="min-h-screen relative overflow-hidden h-screen">
       {/* Background Video Slider */}
-      <div className="absolute inset-0 w-full h-full">
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
         {slides.map((slide, index) => (
           <video
             key={index}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000  ${
               index === currentVideo ? "opacity-100" : "opacity-0"
             }`}
             src={slide.video}
@@ -55,6 +55,8 @@ const HeroSection = () => {
             playsInline
           />
         ))}
+        {/* Black Blur Overlay */}
+        <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
       {/* Dark Overlay */}
