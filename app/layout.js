@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
       <body>
         <Navbar/>
         <main style={{ fontFamily: "Poppins, sans-serif" }}>{children}</main>
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
