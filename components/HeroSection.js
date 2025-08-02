@@ -63,7 +63,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-black/20"></div>
 
       {/* Hero Text Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex items-center justify-center">
+      <div className="relative z-10 bottom-0 sm:bottom-16 container mx-auto px-4 sm:px-6 lg:px-8 min-h-screen flex items-center justify-center">
         <div className="text-center w-full max-w-5xl">
           <div className="text-white space-y-4 transition-all duration-1000 ease-in-out">
             <div key={`title-${currentVideo}`} className="animate-fade-in-up">
@@ -84,7 +84,7 @@ const HeroSection = () => {
       </div>
 
       {/* Bottom Right Changing Image Set */}
-      <div className="absolute  bottom-14  right-2 sm:right-16 z-20 flex space-x-3 transition-all duration-700 ease-in-out">
+      <div className="absolute bottom-14 right-2 sm:right-16 z-20 flex space-x-3 transition-all duration-700 ease-in-out">
         {slides[currentVideo].images.map((src, index) => (
           <div
             key={`img-${currentVideo}-${index}`}
@@ -100,6 +100,51 @@ const HeroSection = () => {
           </div>
         ))}
       </div>
+
+      {/* Bottom Left Animated Counters */}
+      <div className="absolute bottom-16 left-16 z-20   text-white text-center lg:flex hidden">
+        <CounterBox value={2400} label="Projects done" plus />
+        <div className="border-l border-white/40 h-full"></div>
+        <CounterBox value={300} label="Loyal clients" plus />
+        <div className="border-l border-white/40 h-full"></div>
+        <CounterBox value={150} label="Designers" plus />
+        <div className="border-l border-white/40 h-full"></div>
+        <CounterBox value={600} label="Active clients" plus />
+      </div>
+    </div>
+  );
+};
+
+const CounterBox = ({ value, label, plus = false }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const end = value;
+    const duration = 2000; // ms
+    const stepTime = 20;
+    const steps = duration / stepTime;
+    const increment = Math.ceil(end / steps);
+
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= end) {
+        start = end;
+        clearInterval(timer);
+      }
+      setCount(start);
+    }, stepTime);
+
+    return () => clearInterval(timer);
+  }, [value]);
+
+  return (
+    <div className="flex flex-col items-center w-20 sm:w-30">
+      <span className="text-xl sm:text-2xl font-bold">
+        {count}
+        {plus ? "+" : ""}
+      </span>
+      <span className="text-xs sm:text-sm text-white/80">{label}</span>
     </div>
   );
 };

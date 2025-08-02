@@ -3,16 +3,20 @@ import Whychooseus from "@/components/Whychooseus";
 import About from "./about/page";
 import ContactSection from "./contact/page";
 import Services from "./services/page";
+import EnvironmentalHero from "@/components/EnvironmentalHero";
+import GalleryPage from "./gallary/page";
 
 
 export default function Home() {
   return (
     <>
       <HeroSection />
-      <About/>
+      <About />
+      <EnvironmentalHero />
       <Whychooseus />
-      <Services/>
-      <ContactSection/>
+      <Services />
+      <GalleryPage/>
+      <ContactSection />
     </>
   );
 }
