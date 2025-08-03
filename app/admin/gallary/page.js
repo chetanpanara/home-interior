@@ -4,18 +4,20 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Loader } from "lucide-react";
 
-export default function ServicePage() {
+export default function GallaryPage() {
   const [loading, setLoading] = useState(false);
-  const [card, setCard] = useState([]);
+  const [gallary, setGallary] = useState([
+   
+  ]);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await axios.get("/api/admin/service");
+      const res = await axios.get("/api/admin/gallary");
       if (res.data.success) {
-        setCard(res.data.data);
+        setGallary(res.data.data);
       } else {
-        throw new Error(res.data.message || "Failed to fetch services");
+        throw new Error(res.data.message || "Failed to fetch gallary");
       }
     } catch (err) {
       console.error(err);
@@ -29,7 +31,7 @@ export default function ServicePage() {
 
 
   const handelDelete = async (id) => { 
-    await axios.delete(`/api/admin/service/${id}`);
+    await axios.delete(`/api/admin/gallary/${id}`);
     fetchData();
   }
 
@@ -38,19 +40,21 @@ export default function ServicePage() {
       {/* Table */}
       <div className="overflow-x-auto">
         <div className="mb-10">
-          <h2 className="text-xl font-semibold mb-2 text-blue-600">Manage Services</h2>
+          <h2 className="text-xl font-semibold mb-2 text-blue-600">
+            Manage Gallery Photos
+          </h2>
           <p>
-            Add, update, or remove services to keep your offerings up-to-date
-            and organized for your clients.
+            Upload, edit, or delete images to showcase your latest work and
+            maintain an engaging visual portfolio.
           </p>
         </div>
 
         <div className="mb-6">
           <Link
-            href={"/admin/service/addService"}
+            href={"/admin/gallary/addGallary"}
             className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
-            Add New Service
+            Add Gallary Photo
           </Link>
         </div>
 
@@ -64,6 +68,12 @@ export default function ServicePage() {
                 Description
               </th>
               <th className="text-left px-6 py-3 text-sm font-semibold">
+                Category
+              </th>
+              <th className="text-left px-6 py-3 text-sm font-semibold">
+                Size
+              </th>
+              <th className="text-left px-6 py-3 text-sm font-semibold">
                 Image
               </th>
               <th className="text-left px-6 py-3 text-sm font-semibold">
@@ -74,33 +84,32 @@ export default function ServicePage() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan="4">
+                <td colSpan="6">
                   <div className="flex justify-center items-center py-10">
                     <Loader className="h-8 w-8 text-blue-500 animate-spin" />
                     <span className="ml-2 text-blue-600 text-sm font-medium">
-                      Loading services...
+                      Loading photos...
                     </span>
                   </div>
                 </td>
               </tr>
             ) : (
               <>
-                {card.map((item, index) => (
+                {gallary.map((item, index) => (
                   <tr key={index} className="border-t hover:bg-gray-50">
                     <td className="px-6 py-4">{item.title}</td>
                     <td className="px-6 py-4">{item.description}</td>
+                    <td className="px-6 py-4">{item.category}</td>
+                    <td className="px-6 py-4">{item.size}</td>
                     <td className="px-6 py-4">
                       <img
-                        src={`/uploads/${item.image}`}
+                        src={`/uploads/gallary/${item.image}`}
                         alt={item.title}
                         className="w-16 h-16 object-cover rounded"
                       />
                     </td>
                     <td className="px-6 py-4 flex items-center">
-                      <Link
-                        href={`/admin/service/addService/${item._id}`}
-                        className="text-blue-600 hover:underline"
-                      >
+                      <Link href={`/admin/gallary/addGallary/${item._id}`} className="text-blue-600 hover:underline">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="20"

@@ -9,10 +9,15 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
+  // ✅ Hide Navbar completely if path starts with /admin
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
+
   const menuItems = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
-    { name: "Services", href: "/services" },
+    { name: "Our Services", href: "/services" },
     { name: "Gallary", href: "/gallary" },
     { name: "Contact", href: "/contact" },
   ];
@@ -21,12 +26,11 @@ export default function Navbar() {
     setIsOpen(!isOpen);
   };
 
-
   const [isTransparent, setIsTransparent] = useState(true);
-  
+
   useEffect(() => {
     if (pathname !== "/") {
-      // Always show white navbar on other pages
+      // Always white background on other pages
       setIsTransparent(false);
       return;
     }
@@ -41,7 +45,7 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // set initial state on mount
+    handleScroll(); // initial check
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, [pathname]);
@@ -55,17 +59,17 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:justify-center md:relative">
-          {/* Logo - positioned absolutely on desktop to keep menu centered */}
+          {/* Logo */}
           <div className="flex-shrink-0 md:absolute md:left-0">
             <Link
               href="/"
-              className="text-2xl font-bold from-orange-100 via-orange-400 to-orange-500 bg-clip-text text-transparent bg-gradient-to-r "
+              className="text-2xl font-bold from-orange-100 via-orange-400 to-orange-500 bg-clip-text text-transparent bg-gradient-to-r"
             >
               HavenlyHome
             </Link>
           </div>
 
-          {/* Desktop Menu - centered */}
+          {/* Desktop Menu */}
           <div className="hidden md:block">
             <div className="flex items-baseline space-x-2">
               {menuItems.map((item) => {
@@ -80,16 +84,12 @@ export default function Navbar() {
                     className={`relative tracking-widest px-3 py-2 text-sm font-medium transition-colors duration-300 group
                       ${
                         isActive
-                          ? ` ${
-                              isTransparent
-                                ? "text-orange-300"
-                                : "text-orange-500"
-                            }`
-                          : `${
-                              isTransparent
-                                ? "text-gray-50 hover:text-orange-300"
-                                : "text-gray-600 hover:text-orange-500"
-                            }`
+                          ? isTransparent
+                            ? "text-orange-300"
+                            : "text-orange-500"
+                          : isTransparent
+                          ? "text-gray-50 hover:text-orange-300"
+                          : "text-gray-600 hover:text-orange-500"
                       }
                     `}
                   >
@@ -122,7 +122,7 @@ export default function Navbar() {
       <div
         className={`md:hidden transition-all duration-300 ease-in-out ${
           isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
-        } overflow-hidden bg-white `}
+        } overflow-hidden bg-white`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           {menuItems.map((item) => {

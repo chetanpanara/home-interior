@@ -1,10 +1,25 @@
 "use client";
-
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function ServiceForm() {
+
+  const {id} = useParams();
+  const router = useRouter();
+
+  
+  const fetchData = async (id) => { 
+    const res = await axios.get(`/api/admin/service/${id}`);
+    if (res.data.success) { 
+      setFormData(res.data.data);
+    }
+  }
+
+  useEffect(() => { 
+    fetchData(id);
+  },[])
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -13,28 +28,28 @@ export default function ServiceForm() {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const router = useRouter();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-      const data = new FormData();
+    const data = new FormData();
     data.append("title", formData.title);
     data.append("description", formData.description);
     if (formData.image) {
-      data.append('image', formData.image);
+      data.append("image", formData.image);
     }
 
     setLoading(true);
     try {
-      const response = await axios.post("/api/admin/service", data, {
+      const response = await axios.put(`/api/admin/service/${id}`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
       if (response.data.message) {
-        setMessage("Service added successfully!");
+        setMessage("Service Updated successfully!");
         router.push("/admin/service");
         setFormData({ title: "", description: "", image: null });
       } else {
@@ -50,7 +65,7 @@ export default function ServiceForm() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 bg-white shadow-md rounded-lg">
-      <h2 className="text-2xl font-bold mb-6 text-blue-600">Add New Service</h2>
+      <h2 className="text-2xl font-bold mb-6 text-blue-600">Update Service</h2>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Title */}
@@ -60,8 +75,8 @@ export default function ServiceForm() {
           </label>
           <input
             type="text"
-            name="title"
             placeholder="Enter service title"
+            name="title"
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={formData.title}
             onChange={(e) =>
@@ -78,8 +93,8 @@ export default function ServiceForm() {
           </label>
           <textarea
             name="description"
-            rows="4"
             placeholder="Enter service description"
+            rows="4"
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={formData.description}
             onChange={(e) =>
@@ -111,7 +126,7 @@ export default function ServiceForm() {
           className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50"
           disabled={loading}
         >
-          {loading ? "Submitting..." : "Submit"}
+          {loading ? "Updating..." : "Update"}
         </button>
       </form>
 

@@ -1,15 +1,15 @@
 import { connectDB } from "@/lib/db";
-import Service from "@/models/Service";
+import Gallary from "@/models/Gallary";
 import { NextResponse } from "next/server";
 
-//get all data
+
 export async function GET() {
   await connectDB();
-  const cardData = await Service.find();
+  const gallaryData = await Gallary.find();
   return NextResponse.json({
     success: true,
-    data: cardData,
-    message: "Services fetched successfully",
+    data: gallaryData,
+    message: "Gallary fetched successfully",
   });
 }
 
@@ -22,6 +22,8 @@ export async function POST(req) {
     const title = formData.get("title");
     const description = formData.get("description");
     const imageFile = formData.get("image");
+    const category = formData.get("category");
+    const size = formData.get("size") || "medium";
 
     let imagePath = "";
 
@@ -38,7 +40,7 @@ export async function POST(req) {
       // Save file
       const fs = require("fs");
       const path = require("path");
-      const uploadDir = path.join(process.cwd(), "public/uploads");
+      const uploadDir = path.join(process.cwd(), "public/uploads/gallary");
 
       if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true });
@@ -48,22 +50,24 @@ export async function POST(req) {
       imagePath = filename;
     }
 
-    const newUser = new Service({
+    const newUser = new Gallary({
       title,
       description,
       image: imagePath,
+      category,
+      size,
     });
 
     await newUser.save();
 
     return NextResponse.json({
-      message: "services created successfully",
+      message: "Gallary created successfully",
       data: newUser,
     });
   } catch (error) {
-    console.error("Error creating services:", error);
+    console.error("Error creating Gallary:", error);
     return NextResponse.json(
-      { message: "Error creating services", error: error.message },
+      { message: "Error creating Gallary", error: error.message },
       { status: 500 }
     );
   }

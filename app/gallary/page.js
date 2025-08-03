@@ -28,79 +28,32 @@ const GalleryPage = () => {
   
 
   const [isVisible, setIsVisible] = useState(false);
-  const [galleryData, setgalleryData] = useState([
-    {
-      id: 1,
-      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-      category: "Living Room",
-      title: "Elegant Living Room",
-      description:
-        "A warm and inviting living space with modern furniture and soft neutral tones.",
-      size: "large", // Will span 2 columns and 2 rows
-    },
-    {
-      id: 2,
-      image: "/img/p2.jpg",
-      category: "Reading Corner",
-      title: "Minimalist Bedroom",
-      description:
-        "A sleek, clutter-free bedroom designed for comfort and relaxation.",
-      size: "medium", // Regular size
-    },
-    {
-      id: 3,
-      image: "/img/p3.jpg",
-      category: "Kitchen",
-      title: "Luxury Kitchen",
-      description:
-        "A modern modular kitchen featuring premium materials and functional elegance.",
-      size: "medium",
-    },
-    {
-      id: 4,
-      image: "/img/p4.webp",
-      category: "Bedroom",
-      title: "Modern Dining Area",
-      description:
-        "A stylish dining space combining simplicity and elegance for family gatherings.",
-      size: "medium", // Will span 2 columns
-    },
-    {
-      id: 5,
-      image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
-      category: "Bedroom",
-      title: "Traditional Crop Cultivation",
-      description:
-        "A tranquil corner with soft lighting, perfect for relaxation and reading.",
-      size: "medium",
-    },
-  ]);
+  const [galleryData, setgalleryData] = useState([]);
 
 
-  // const fetchGallaryData = async () => {
-  //   const response = await axios.get("/api/gallary");
-  //   console.log(response.data.data);
-  //   setgalleryData(response.data.data);
+  const fetchGallaryData = async () => {
+    const response = await axios.get("/api/admin/gallary");
+    setgalleryData(response.data.data);
 
-  //   // Generate dynamic filter categories from fetched data
-  //   const uniqueCategories = [
-  //     ...new Set(response.data.data.map((item) => item.category)),
-  //   ];
-  //   const dynamicCategories = [
-  //     { key: "all", label: "All Projects" },
-  //     ...uniqueCategories.map((category) => ({
-  //       key: category,
-  //       label: category
-  //         .split("-")
-  //         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-  //         .join(" "),
-  //     })),
-  //   ];
-  //   setFilterCategories(dynamicCategories);
-  // };
+    // Generate dynamic filter categories from fetched data
+    const uniqueCategories = [
+      ...new Set(response.data.data.map((item) => item.category)),
+    ];
+    const dynamicCategories = [
+      { key: "all", label: "All Projects" },
+      ...uniqueCategories.map((category) => ({
+        key: category,
+        label: category
+          .split("-")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" "),
+      })),
+    ];
+    setFilterCategories(dynamicCategories);
+  };
 
   useEffect(() => {
-    // fetchGallaryData(); // fetch Gallery data
+    fetchGallaryData(); // fetch Gallery data
     setIsVisible(true);
   }, []);
 
@@ -114,9 +67,6 @@ const GalleryPage = () => {
   // ADD this new state for dynamic filter categories:
   const [filterCategories, setFilterCategories] = useState([
     { key: "all", label: "All Design" },
-    { key: "Living Room", label: "Living Room" },
-    { key: "Bedroom", label: "Bedroom" },
-    { key: "Kitchen", label: "Kitchen" },
   ]);
 
   useEffect(() => {
@@ -301,7 +251,8 @@ const GalleryPage = () => {
 
         <div className="text-center max-w-4xl mx-auto mb-12">
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-            Our Interior <span className="text-orange-300">Design Showcase</span>
+            Our Interior{" "}
+            <span className="text-orange-300">Design Showcase</span>
           </h2>
           <p className="text-gray-600 text-md md:text-lg">
             Explore our curated collection of elegant interiors crafted for
@@ -353,7 +304,7 @@ const GalleryPage = () => {
           >
             {filteredImages.map((image, index) => (
               <div
-                key={image.id}
+                key={index}
                 ref={(el) => (itemsRef.current[index] = el)}
                 className={`group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 cursor-pointer ${getSizeClasses(
                   image.size,
@@ -363,7 +314,7 @@ const GalleryPage = () => {
               >
                 <div className="w-full h-full overflow-hidden">
                   <img
-                    src={image.image}
+                    src={`/uploads/gallary/${image.image}`}
                     alt={image.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
@@ -443,7 +394,7 @@ const GalleryPage = () => {
 
             <div className="bg-white rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src={selectedImage.image}
+                src={`/uploads/gallary/${selectedImage.image}`}
                 alt={selectedImage.title}
                 className="w-full max-h-[60vh] object-cover"
               />

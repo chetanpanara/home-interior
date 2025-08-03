@@ -1,19 +1,23 @@
 import { connectDB } from "@/lib/db";
-import Service from "@/models/Service";
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import Gallary from "@/models/Gallary";
+
+
 
 export async function GET(req, { params }) {
   await connectDB();
   const { id } = params;
-  const service = await Service.findById(id);
+  const gallary = await Gallary.findById(id);
   return NextResponse.json({
     success: true,
-    data: service,
-    message: "Services fetched successfully",
+    data: gallary,
+    message: "gallary fetched successfully",
   });
 }
+
+
 
 export async function PUT(req, { params }) {
   try {
@@ -24,19 +28,21 @@ export async function PUT(req, { params }) {
     const formData = await req.formData();
     const title = formData.get("title");
     const description = formData.get("description");
+    const category = formData.get("category");
+    const size = formData.get("size");
     const imageFile = formData.get("image");
 
-    let updateData = { title, description };
+    let updateData = { title, description, category, size };
 
     // Handle image update
     if (imageFile && imageFile.size > 0) {
       // Get existing user to remove old image
-      const existingService = await Service.findById(id);
-      if (existingService && existingService.image) {
+      const existingGallary = await Gallary.findById(id);
+      if (existingGallary && existingGallary.image) {
         const oldImagePath = path.join(
           process.cwd(),
-          "public/uploads",
-          existingService.image
+          "public/uploads/gallary",
+          existingGallary.image
         );
         if (fs.existsSync(oldImagePath)) {
           fs.unlinkSync(oldImagePath);
@@ -53,7 +59,7 @@ export async function PUT(req, { params }) {
       const filename = `image-${uniqueSuffix}.${extension}`;
 
       // Save new file
-      const uploadDir = path.join(process.cwd(), "public/uploads");
+      const uploadDir = path.join(process.cwd(), "public/uploads/gallary");
       if (!fs.existsSync(uploadDir)) {
         fs.mkdirSync(uploadDir, { recursive: true });
       }
@@ -62,22 +68,23 @@ export async function PUT(req, { params }) {
       updateData.image = filename;
     }
 
-    const updatedservice = await Service.findByIdAndUpdate(id, updateData, {
+    const updatedGallary = await Gallary.findByIdAndUpdate(id, updateData, {
       new: true,
     });
 
     return NextResponse.json({
-      message: "Service updated successfully",
-      data: updatedservice,
+      message: "Gallary updated successfully",
+      data: updatedGallary,
     });
   } catch (error) {
-    console.error("Error updating Service:", error);
+    console.error("Error updating Gallary:", error);
     return NextResponse.json(
-      { message: "Error updating Service", error: error.message },
+      { message: "Error updating Gallary", error: error.message },
       { status: 500 }
     );
   }
 }
+
 
 export async function DELETE(req, { params }) {
   try {
@@ -85,28 +92,28 @@ export async function DELETE(req, { params }) {
     const { id } = params;
 
     // Get user data before deletion to remove image file
-    const service = await Service.findById(id);
+    const gallary = await Gallary.findById(id);
 
-    if (service && service.image) {
+    if (gallary && gallary.image) {
       const imagePath = path.join(
         process.cwd(),
-        "public/uploads",
-        service.image
+        "public/uploads/gallary",
+        gallary.image
       );
       if (fs.existsSync(imagePath)) {
         fs.unlinkSync(imagePath);
       }
     }
 
-    const deletedservice = await Service.findByIdAndDelete(id);
+    const deletedgallary = await Gallary.findByIdAndDelete(id);
     return NextResponse.json({
-      message: "service deleted successfully",
-      data: deletedservice,
+      message: "gallary deleted successfully",
+      data: deletedgallary,
     });
   } catch (error) {
-    console.error("Error deleting service:", error);
+    console.error("Error deleting gallary:", error);
     return NextResponse.json(
-      { message: "Error deleting service", error: error.message },
+      { message: "Error deleting gallary", error: error.message },
       { status: 500 }
     );
   }

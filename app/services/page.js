@@ -8,42 +8,41 @@ import { useEffect, useState } from "react";
 export default function Services() {
 
 
-  // const [cards, setCard] = useState([]);
+  const [cards, setCard] = useState([]);
 
-  const cards = [
-    {
-      title: "Residential Interior Design",
-      description:
-        "Crafting warm and inviting living spaces that reflect your personality and ensure comfort with style.",
-      image: "/img/p1.jpeg",
-    },
-    {
-      title: "Commercial Interior Design",
-      description:
-        "Designing professional, functional, and visually appealing environments that enhance productivity and brand image.",
-      image: "/img/p2.jpg",
-    },
-    {
-      title: "Space Planning & Renovation",
-      description:
-        "Optimizing layouts and revamping interiors with smart design solutions to make the most of your available space.",
-      image: "/img/p3.jpg",
-    },
-  ];
+  // const cards = [
+  //   {
+  //     title: "Residential Interior Design",
+  //     description:
+  //       "Crafting warm and inviting living spaces that reflect your personality and ensure comfort with style.",
+  //     image: "/img/p1.jpeg",
+  //   },
+  //   {
+  //     title: "Commercial Interior Design",
+  //     description:
+  //       "Designing professional, functional, and visually appealing environments that enhance productivity and brand image.",
+  //     image: "/img/p2.jpg",
+  //   },
+  //   {
+  //     title: "Space Planning & Renovation",
+  //     description:
+  //       "Optimizing layouts and revamping interiors with smart design solutions to make the most of your available space.",
+  //     image: "/img/p3.jpg",
+  //   },
+  // ];
 
-  // const fetchData = async () => {
-  //   const res = await axios.get("/api/admin/service");
-  //   if (res.data.success) {
-  //     console.log(res.data.data);
-  //     setCard(res.data.data);
-  //   } else {
-  //     throw new Error(res.data.message || "Failed to fetch services");
-  //   }
-  // };
+  const fetchData = async () => {
+    const res = await axios.get("/api/admin/service");
+    if (res.data.success) {
+      setCard(res.data.data);
+    } else {
+      throw new Error(res.data.message || "Failed to fetch services");
+    }
+  };
 
-  // useEffect(() => { 
-  //   fetchData();
-  // },[]);
+  useEffect(() => { 
+    fetchData();
+  },[]);
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 mt-20 bg-white">
@@ -70,8 +69,8 @@ export default function Services() {
             viewport={{ once: true }}
           >
             <img
-              // src={`/uploads/${card.image}`}
-              src={card.image}
+              src={`/uploads/${card.image}`}
+              // src={card.image}
               alt={card.title}
               className="w-full h-64 object-cover"
             />
