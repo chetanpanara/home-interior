@@ -48,7 +48,7 @@ export default function Navbar() {
     handleScroll(); // initial check
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [pathname]);
+  }, []);
 
   return (
     <nav
