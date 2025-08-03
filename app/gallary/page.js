@@ -28,32 +28,78 @@ const GalleryPage = () => {
   
 
   const [isVisible, setIsVisible] = useState(false);
-  const [galleryData, setgalleryData] = useState([]);
+  const [galleryData, setgalleryData] = useState([
+    {
+      id: 1,
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      category: "Living Room",
+      title: "Elegant Living Room",
+      description:
+        "A warm and inviting living space with modern furniture and soft neutral tones.",
+      size: "large", // Will span 2 columns and 2 rows
+    },
+    {
+      id: 2,
+      image: "/img/p2.jpg",
+      category: "Reading Corner",
+      title: "Minimalist Bedroom",
+      description:
+        "A sleek, clutter-free bedroom designed for comfort and relaxation.",
+      size: "medium", // Regular size
+    },
+    {
+      id: 3,
+      image: "/img/p3.jpg",
+      category: "Kitchen",
+      title: "Luxury Kitchen",
+      description:
+        "A modern modular kitchen featuring premium materials and functional elegance.",
+      size: "medium",
+    },
+    {
+      id: 4,
+      image: "/img/p4.webp",
+      category: "Bedroom",
+      title: "Modern Dining Area",
+      description:
+        "A stylish dining space combining simplicity and elegance for family gatherings.",
+      size: "medium", // Will span 2 columns
+    },
+    {
+      id: 5,
+      image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
+      category: "Bedroom",
+      title: "Traditional Crop Cultivation",
+      description:
+        "A tranquil corner with soft lighting, perfect for relaxation and reading.",
+      size: "medium",
+    },
+  ]);
 
 
-  const fetchGallaryData = async () => {
-    const response = await axios.get("/api/admin/gallary");
-    setgalleryData(response.data.data);
+  // const fetchGallaryData = async () => {
+  //   const response = await axios.get("/api/admin/gallary");
+  //   setgalleryData(response.data.data);
 
-    // Generate dynamic filter categories from fetched data
-    const uniqueCategories = [
-      ...new Set(response.data.data.map((item) => item.category)),
-    ];
-    const dynamicCategories = [
-      { key: "all", label: "All Projects" },
-      ...uniqueCategories.map((category) => ({
-        key: category,
-        label: category
-          .split("-")
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(" "),
-      })),
-    ];
-    setFilterCategories(dynamicCategories);
-  };
+  //   // Generate dynamic filter categories from fetched data
+  //   const uniqueCategories = [
+  //     ...new Set(response.data.data.map((item) => item.category)),
+  //   ];
+  //   const dynamicCategories = [
+  //     { key: "all", label: "All Projects" },
+  //     ...uniqueCategories.map((category) => ({
+  //       key: category,
+  //       label: category
+  //         .split("-")
+  //         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  //         .join(" "),
+  //     })),
+  //   ];
+  //   setFilterCategories(dynamicCategories);
+  // };
 
   useEffect(() => {
-    fetchGallaryData(); // fetch Gallery data
+   // fetchGallaryData(); // fetch Gallery data
     setIsVisible(true);
   }, []);
 
@@ -67,6 +113,10 @@ const GalleryPage = () => {
   // ADD this new state for dynamic filter categories:
   const [filterCategories, setFilterCategories] = useState([
     { key: "all", label: "All Design" },
+    { key: "Bedroom", label: "Bedroom" },
+    { key: "Kitchen", label: "Kitchen" },
+    { key: "Reading Corner", label: "Reading Corner" },
+    { key: "Living Room", label: "Living Room" },
   ]);
 
   useEffect(() => {
@@ -314,7 +364,8 @@ const GalleryPage = () => {
               >
                 <div className="w-full h-full overflow-hidden">
                   <img
-                    src={`/uploads/gallary/${image.image}`}
+                    // src={`/uploads/gallary/${image.image}`}
+                    src={image.image}
                     alt={image.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
@@ -394,7 +445,8 @@ const GalleryPage = () => {
 
             <div className="bg-white rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src={`/uploads/gallary/${selectedImage.image}`}
+                // src={`/uploads/gallary/${selectedImage.image}`}
+                src={selectedImage.image}
                 alt={selectedImage.title}
                 className="w-full max-h-[60vh] object-cover"
               />
